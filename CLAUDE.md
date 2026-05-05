@@ -161,7 +161,8 @@ interface Signal {
 }
 
 // 실행 엔진
-interface SignalRecord { id: string; strategy_id: string; strategy_name: string
+interface SignalRecord {
+  id: string; strategy_id: string; strategy_name: string
   symbol: string; market: string; action: 'BUY' | 'SELL' | 'HOLD'
   quantity: number | null; price: number | null; current_price: number
   order_type: 'MARKET' | 'LIMIT'; reason: string; generated_at: string; notified: boolean
