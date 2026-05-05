@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip3 show:*)",
+      "Bash(python3:*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(npx tsc *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://fc.yahoo.com\" -A \"Mozilla/5.0\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://query2.finance.yahoo.com/v1/test/getcrumb\" -A \"Mozilla/5.0\")",
+      "Bash(curl -si \"https://finance.yahoo.com\" -A \"Mozilla/5.0\" --max-time 10)",
+      "Bash(curl -sc /tmp/yf_cookie https://finance.yahoo.com -A 'Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36' -H 'Accept: text/html' --max-time 10 -o /dev/null)",
+      "Read(/tmp/**)",
+      "Bash(curl -b /tmp/yf_cookie https://query2.finance.yahoo.com/v1/test/getcrumb -A 'Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36')",
+      "Bash(curl -s \"http://localhost:8000/api/stock/prices?symbols=AAPL,MSFT,TSLA\")",
+      "Bash(curl -s \"http://localhost:8000/health\")",
+      "Bash(curl -s \"http://localhost:8000/api/stock/lookup?symbol=AAPL\")",
+      "Bash(node --input-type=module)",
+      "Bash(curl -v \"http://localhost:8000/api/stock/lookup?symbol=AAPL\")",
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\" \"http://localhost:8000/api/stock/lookup?symbol=AAPL\")",
+      "Bash(curl -s \"http://localhost:8000/api/stock/lookup?symbol=APPL\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "bash ~/quant-project/.claude/hooks/quality-gate.sh" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash ~/quant-project/.claude/hooks/guard.sh" }
+        ]
+      }
+    ]
+  }
+}
